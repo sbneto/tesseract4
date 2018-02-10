@@ -1,8 +1,16 @@
-FROM sbneto/tesseract4:python
+FROM sbneto/tesseract4:python-por
 
-ENV TESSERACT_TRAINED_LANG=por
-# DOWNLOADING TRAINED DATA
-RUN mkdir -p $TESSDATA_PREFIX/tessdata \
-    && wget -O $TESSDATA_PREFIX/tessdata/osd.traineddata "https://github.com/tesseract-ocr/tessdata/raw/3.04.00/osd.traineddata" \
-    && wget -O $TESSDATA_PREFIX/tessdata/equ.traineddata "https://github.com/tesseract-ocr/tessdata/raw/3.04.00/equ.traineddata" \
-    && wget -O $TESSDATA_PREFIX/tessdata/$TESSERACT_TRAINED_LANG.traineddata "https://github.com/tesseract-ocr/tessdata/raw/master/$TESSERACT_TRAINED_LANG.traineddata"
+RUN apt-get update \
+    && apt-get install -y imagemagick ghostscript \
+	&& apt-get autoremove -yqq \
+	&& apt-get clean \
+	&& rm -Rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
+
+# INSTALLING TESSERACT SERVICE
+COPY etc /etc
+RUN chmod 750 /etc/service/tesseract/run
+
+COPY tesseract /app/tesseract
+
+EXPOSE 8000
+CMD ["/sbin/my_init"]
