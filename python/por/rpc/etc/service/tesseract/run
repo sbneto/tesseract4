@@ -1,0 +1,5 @@
+#!/bin/bash
+set -ex
+
+# STARTING RPC SERVER
+exec python3 /app/tesseract/app.py
