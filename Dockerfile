@@ -1,7 +1,7 @@
 FROM sbneto/tesseract4:python-por
 
 RUN apt-get update \
-    && apt-get install -y imagemagick ghostscript \
+    && apt-get install -y --no-install-recommends poppler-utils imagemagick ghostscript \
 	&& apt-get autoremove -yqq \
 	&& apt-get clean \
 	&& rm -Rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
