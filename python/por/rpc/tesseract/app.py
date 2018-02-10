@@ -52,7 +52,7 @@ def tesseract(pdf_file, limit_pages=None):
                 ],
                 pdf_file.data,
             )
-            text = run_subprocess(['tesseract', '-', '-', '-l', 'por', '--psm', '1'], tiff_image['stdout'])
+            text = run_subprocess(['tesseract', '-', '-', '-l', 'por', '--psm', '1', '--oem', '2'], tiff_image['stdout'])
             full_text += text['stdout']
         return Binary(full_text)
     except RuntimeError:
