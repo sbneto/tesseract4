@@ -1,4 +1,4 @@
-FROM phusion/baseimage
+FROM sbneto/phusion-python:3.6
 
 # https://github.com/DanBloomberg/leptonica/releases
 # https://github.com/tesseract-ocr/tesseract/commits/master
