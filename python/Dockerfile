@@ -47,6 +47,7 @@ RUN set -ex \
     && ./configure \
     && make \
     && make install \
+    && rm -rf /usr/src/leptonica \
 # COMPILING TESSERACT
     && cd /usr/src/tesseract/tesseract-$TESSERACT_SHA \
     && ./autogen.sh \
@@ -54,6 +55,7 @@ RUN set -ex \
     &&  make \
     && make install \
     && ldconfig \
+    && rm -rf /usr/src/tesseract \
 # CLEANUP
     && apt-get purge -yqq $buildDeps \
     && apt-get autoremove -yqq \
