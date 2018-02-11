@@ -19,6 +19,7 @@ RUN set -ex \
         libpng-dev \
         libjpeg8-dev \
         libtiff5-dev \
+        libgif-dev \
         zlib1g-dev \
     " \
     && apt-get install -y --no-install-recommends \
@@ -26,6 +27,7 @@ RUN set -ex \
         libpng12-0 \
         libjpeg8 \
         libtiff5 \
+        libgif7 \
         zlib1g \
         wget \
         git \
