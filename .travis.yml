@@ -1,0 +1,17 @@
+sudo: required
+
+services:
+  - docker
+
+language: python
+python:
+  - "3.6"
+install: pip install pytest
+cache: pip
+matrix:
+  fast_finish: true
+
+script:
+  - ./build.sh
+  - docker run --rm -d -p "8000:8000" sbneto/tesseract4:python-por-rpc
+  - pytest
