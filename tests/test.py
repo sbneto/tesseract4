@@ -23,11 +23,17 @@ small_image_convert = {
 
 
 def test_convert_simple_phone_number():
-    with open('number.gif', 'rb') as f:
+    with open('tests/number.gif', 'rb') as f:
         proxy.convert(f.read(), small_image_convert)
 
 
 def test_tesseract_simple_phone_number():
-    with open('number.gif', 'rb') as f:
+    with open('tests/number.gif', 'rb') as f:
         text = str(proxy.tesseract(f.read(), {'convert': small_image_convert}), 'utf-8')
         assert text.strip() == '(12) 99738 5318'
+
+
+def test_tesseract_pdf():
+    with open('tests/test.pdf', 'rb') as f:
+        text = str(proxy.tesseract(f.read()), 'utf-8')
+        print(text)
