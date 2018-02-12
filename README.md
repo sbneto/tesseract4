@@ -1,5 +1,6 @@
 # tesseract4
 
+[![Build Status](https://travis-ci.org/sbneto/tesseract4.svg?branch=master)](https://travis-ci.org/sbneto/tesseract4)
 
 # Usage
 
