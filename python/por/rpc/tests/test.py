@@ -2,7 +2,7 @@ from os import path
 from xmlrpc.client import ServerProxy
 
 BASE_FOLDER = path.dirname(path.abspath(__file__))
-proxy = ServerProxy('http://localhost:8000/', use_builtin_types=True)
+proxy = ServerProxy('http://127.0.0.1:8000/', use_builtin_types=True)
 
 small_image_convert = {
     'output_options': [
