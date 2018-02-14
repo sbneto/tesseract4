@@ -5,14 +5,23 @@ services:
 
 language: python
 python:
-  - "3.6"
+  - '3.6'
 install: pip install pytest
 cache: pip
 matrix:
   fast_finish: true
 
+env:
+  global:
+    - secure: ragVdRFrsTy3IKsCSDo1Jg8sYijFQtsyzj506fLq0sIg3X7AjHL3+SZAQuOUqspWhZmR/2GEl2igflB8q7bGA1Tj9ghIx7wSGUxbeu4niYaCuBV6OkIaQ3v4SXymnJv7bEJOyHHmfcJgCfy+U3Iqhe6zpl5Rd3jzrh1GZp21nEZw2qinddl8EJ2HtI9RqfFxt9FlReVV5Guei+r8mqjR/wYi7T9BMY/iQIW+DMN8G/wjl3M7Kvke9x5IkRg5tI9k7ZjeN4gmNLe2ntpOkzdjt1lP6lzSNh6wIxvSY57EUw9ZWnn8L7nbPx2/Q00ASszLhtsoyCUc8l3eeOkLjD1LmWmvYKF42pr7/xa5bpPV4Q5SGoxw/2r3GcAPQVLTT4HfjNIJNvDlEXGaH/xOFPArRffuPHjQWN847EhAs0mPrOar3at5LFQaR8wV1QSrjEnZWpLHKHha71p0thFe+oQqD3ThwelA9rc184qnYeoPKs8pPy+F1S8mdGnW4S1d4ZccP4yr5l3TccdD0ANeOqFrFkllKxIQa/3W7704uUFvO4i9ibBEnDxiFPewNuPmc3kLTcq1dtkqSCxdKfr1wh4sQJmBmAW3/2gWliKwe5etzSGjfKT+gg32l3Sgvzr6cJRXr7ra0Kw8zjc0nTPHtc/3rxVZ9RUjtIWds0FTuOUSRX0=
+    - secure: dLajq2++p1gdB9m9CLEJuvmyxvtjZIW3eQa0HhsJTRdBH9T07idlCndHbTrMPQuHVmksMmAO9uneCByfsVF1jUs16+0WjjlEORHgp0cpfP21ad5PGt6iya90kaPSlSxDmHE22q4ndU5PB2KXzutQbp7IS+d6my5DZXBdblNMa21scyIQ8ebnEZ6fh2ovhJoOqLyC+JNd9WnNbz2nrsAS2Y8ycSmQK1+Tvf4DdqEQ6MBJpHye4As2SxKJD6voEhyBP1hMGngA0ORJEpnhCO8VkGjRON3RkPJgdwIDm1CzlJ0uQDqQrtDt00hMD2tHqzpPOObGpHJh53XpXXr2Hh6q8/O70zeXur5AW8Q1De2K6tIP0fYfSEkDJGnk4KTsYU3u/NaUkxLbay6N9Al2A7OS/wpYUD2P/Kt60O1LudPyJcfSWvNjHjwMSu2vuP82ilZsE2VwO70yqaK2FdFU1si2szppN/ZwqnqDLlACE0P9+lgqqn/x7Sgph6tEWNJx1IEHqLyxXFxecDryRxj0CwLdNjmrs3GXYzeRsT6vqTTyaV6IyBnmgYPydZfNPlmxdRROMSeS3sFktVn45f7M5eZWogF8iqwo0y4XC8C0LYXIYgITsgy/mE/ut80vDtTq9cb7Y+fYP7uiSXcjws7ItxK/0lTZyHMwAIYvKQaFvf85MlU=
+
+
+before_script:
+  - echo "$TOKEN" | docker login -u "$USER" --password-stdin
+
 script:
-  - ./build.sh
+  - "./build.sh"
   - docker run --rm -d -p "8000:8000" sbneto/tesseract4:python-por-rpc
   - sleep 10
   - docker ps
