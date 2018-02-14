@@ -26,3 +26,4 @@ script:
   - sleep 10
   - docker ps
   - pytest
+  - "./push.sh"
