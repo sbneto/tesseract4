@@ -1,4 +1,5 @@
 import logging
+import os
 import subprocess
 from xmlrpc.server import SimpleXMLRPCServer
 
@@ -37,7 +38,7 @@ def n_pages_pdf(pdf_file):
 
 class RPCFunctions:
     def _tesseract(self, file_data, options=None):
-        options = options or ['-l', 'por', '--psm', '3', '--oem', '0']
+        options = options or ['-l', os.environ['TESSERACT_TRAINED_LANG'], '--psm', '3', '--oem', '0']
         command = ['tesseract', '-', '-'] + options
         return run_subprocess(command, file_data)['stdout']
 
