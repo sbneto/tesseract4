@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-docker pull sbneto/tesseract4:python
-docker pull sbneto/tesseract4:python-por
-docker pull sbneto/tesseract4:python-por-rpc
 
-docker build -t sbneto/tesseract4:python --cache-from sbneto/tesseract4:python python/
-docker build -t sbneto/tesseract4:python-por --cache-from sbneto/tesseract4:python-por python/por/
-docker build -t sbneto/tesseract4:python-por-rpc --cache-from sbneto/tesseract4:python-por-rpc python/por/rpc/
+for DIR in $(find . -mindepth 1 -maxdepth 3 -not -path '*/\.*' -type d  -not -path '*/\.*'); do
+    TAG=${DIR#\./}
+    TAG=${TAG//\//-}
+    docker pull sbneto/tesseract4:$TAG
+    docker build -t sbneto/tesseract4:$TAG --cache-from sbneto/tesseract4:$TAG $DIR
+done
