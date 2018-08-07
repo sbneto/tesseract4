@@ -24,27 +24,29 @@ def run_subprocess(command, input_data, **kwargs):
     return result
 
 
-def n_pages_pdf(pdf_file):
-    logger.debug('Extraction PDF number of pages...')
-    data = run_subprocess(['pdfinfo', '-'], pdf_file)
-    data = str(data['stdout'], 'utf-8').split('\n')
-    for line in data:
-        if 'Pages' in line:
-            _, _, number = line.partition(':')
-            number = int(number.strip().rstrip())
-            break
-    return number
-
-
 class RPCFunctions:
-    def _tesseract(self, file_data, options=None):
+    def raw_tesseract(self, file_data, options=None):
         options = options or ['-l', os.environ['TESSERACT_TRAINED_LANG'], '--psm', '3', '--oem', '0']
         command = ['tesseract', '-', '-'] + options
         return run_subprocess(command, file_data)['stdout']
 
-    def pdf_as_images(self, file_data, limit_pages=None):
+    def n_pages_pdf(self, pdf_file):
+        logger.debug('Extraction PDF number of pages...')
+        data = run_subprocess(['pdfinfo', '-'], pdf_file)
+        data = str(data['stdout'], 'utf-8').split('\n')
+        for line in data:
+            if 'Pages' in line:
+                _, _, number = line.partition(':')
+                number = int(number.strip().rstrip())
+                break
+        return number
+
+    def pdf_as_images(self, file_data, page_begin=None, page_end=None):
         images = []
-        limit_pages = limit_pages or n_pages_pdf(file_data)
+        page_begin = page_begin or 0
+        n_pages = self.n_pages_pdf(file_data)
+        page_end = page_end or n_pages
+        page_end = min(n_pages, page_end)
         options = {
             'input_options': ['-density', '400'],
             'output_options': [
@@ -66,7 +68,7 @@ class RPCFunctions:
             ],
             'output': 'tiff:-',
         }
-        for i in range(0, limit_pages):
+        for i in range(page_begin, page_end):
             options['input'] = '-[{}]'.format(i)
             images.append(self.convert(file_data, options))
         return images
@@ -91,7 +93,7 @@ class RPCFunctions:
         images = self._prepare_images(raw_data, **options.get('convert', {}))
         full_text = b''
         for image in images:
-            full_text += self._tesseract(image, options.get('tesseract', []))
+            full_text += self.raw_tesseract(image, options.get('tesseract', []))
         return full_text
 
     def convert(self, raw_data, options={}):
