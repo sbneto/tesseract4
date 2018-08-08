@@ -2,10 +2,15 @@ import logging
 import os
 import subprocess
 from xmlrpc.server import SimpleXMLRPCServer
+from socketserver import ThreadingMixIn
 
 import magic
 
 logger = logging.getLogger(__name__)
+
+
+class ThreadedXMLRPCServer(ThreadingMixIn, SimpleXMLRPCServer):
+    pass
 
 
 def run_subprocess(command, input_data, **kwargs):
@@ -109,7 +114,7 @@ class RPCFunctions:
 
 
 if __name__ == '__main__':
-    with SimpleXMLRPCServer(("0.0.0.0", 8000), use_builtin_types=True) as server:
+    with ThreadedXMLRPCServer(("0.0.0.0", 8000), use_builtin_types=True) as server:
         print("Listening on port 8000...")
         server.register_instance(RPCFunctions())
         server.serve_forever()
