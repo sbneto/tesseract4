@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 def run_subprocess(command, input_data, **kwargs):
+    logger.info('Running: %s', command)
     process = subprocess.run(
         command,
         input=input_data,
