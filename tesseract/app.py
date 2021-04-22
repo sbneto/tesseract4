@@ -87,7 +87,7 @@ class RPCFunctions:
         return images
 
     def tesseract(self, raw_data, options={}):
-        logger.debug('Extraction PDF information via tesseract...')
+        logger.debug('Extracting PDF information via tesseract...')
         images = self._prepare_images(raw_data, **options.get('convert', {}))
         full_text = b''
         for image in images:

@@ -5,7 +5,7 @@ services:
 
 language: python
 python:
-  - '3.6'
+  - '3.9'
 install: pip install pytest
 cache: pip
 matrix:
@@ -21,7 +21,7 @@ env:
 
 script:
   - "./build.sh"
-  - docker run --rm -d -p "8000:8000" sbneto/tesseract4:python-por-rpc
+  - docker run --rm -d -p 8000:8000 sbneto/tesseract4:por
   - sleep 10
   - docker ps
   - pytest
