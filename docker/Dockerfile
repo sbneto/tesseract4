@@ -3,7 +3,7 @@ FROM python:3.9-slim-buster
 # https://github.com/DanBloomberg/leptonica/releases
 # https://github.com/tesseract-ocr/tesseract/commits/master
 ENV LEPTONICA_VERSION="1.80.0" \
-    TESSERACT_SHA="66a963b50a8a89cd7d65f6185d6a21ffb749b246" \
+    TESSERACT_SHA="75103040c94ffd7fe5e4e3dfce0a7e67a8420849" \
     LIBMAGIC_VERSION="5.39" \
     PATH="/usr/local/bin:/usr/local/lib:$PATH"
 
