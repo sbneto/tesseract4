@@ -63,7 +63,7 @@ RUN set -ex \
     && rm -rf /tmp/libmagic \
     # Fixing imagemagic issue that was blocking pdf processing
     # https://stackoverflow.com/questions/52998331/imagemagick-security-policy-pdf-blocking-conversion
-    && sed -i '/disable ghostscript format types/,+6d' /etc/ImageMagick-6/policy.xml
+    && sed -i '/disable ghostscript format types/,+6d' /etc/ImageMagick-6/policy.xml \
     # DOWNLOADING LEPTONICA
     && wget -O /tmp/leptonica.tar.gz "https://github.com/DanBloomberg/leptonica/releases/download/$LEPTONICA_VERSION/leptonica-$LEPTONICA_VERSION.tar.gz" \
     && mkdir -p /tmp/leptonica \
