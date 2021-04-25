@@ -7,7 +7,7 @@
 Run the container with the following command:
 
 ```bash
-docker run --rm -d -p "8000:8000" sbneto/tesseract4:python-por-rpc
+docker run --rm -d -p "8000:8000" sbneto/tesseract4:por
 ```
 
 And connect to the container running python XMLRPC server to run remote calls.
