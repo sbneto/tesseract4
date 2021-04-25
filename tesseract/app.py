@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 def run_subprocess(command, input_data, **kwargs):
-    logger.info('Running: %s', command)
+    logger.info('Running: %s', ' '.join(command))
     process = subprocess.run(
         command,
         input=input_data,
@@ -108,7 +108,11 @@ class RPCFunctions:
 
 
 if __name__ == '__main__':
+    logging.basicConfig(
+        level=os.environ.get('LOG_LEVEL', 'DEBUG'),
+        format='[%(levelname)s] [%(asctime)s] %(message)s'
+    )
     with SimpleXMLRPCServer(("0.0.0.0", 8000), use_builtin_types=True) as server:
-        print("Listening on port 8000...")
+        logger.warning("Listening on port 8000...")
         server.register_instance(RPCFunctions())
         server.serve_forever()
